@@ -1,5 +1,9 @@
 package index
 
+import (
+	"github.com/penguinn/leetcode/common"
+)
+
 /**
  * Definition for a binary tree node. */
 type TreeNode struct {
@@ -8,7 +12,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func sumOfLeftLeaves(root *TreeNode) int {
+func sumOfLeftLeaves(root *common.TreeNode) int {
 	if root == nil {
 		return 0
 	}
