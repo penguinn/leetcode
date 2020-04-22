@@ -1,2 +1,2 @@
 # leetcode
-完成leetcode上的算法题目
+完成leetcode上的题目
