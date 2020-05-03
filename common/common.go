@@ -32,3 +32,8 @@ func NewBinaryTree(array []interface{}) *TreeNode {
 	}
 	return nodeMap[0]
 }
+
+type Node struct {
+	Val      int
+	Children []*Node
+}
