@@ -37,3 +37,32 @@ type Node struct {
 	Val      int
 	Children []*Node
 }
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func NewList(array []interface{}) *ListNode {
+	length := len(array)
+	if length <= 0 {
+		return nil
+	}
+
+	var list *ListNode
+	p := list
+	for i := 0; i < length; i++ {
+		if i == 0 {
+			list = &ListNode{
+				Val: array[i].(int),
+			}
+			p = list
+		} else {
+			list.Next = &ListNode{
+				Val: array[i].(int),
+			}
+			list = list.Next
+		}
+	}
+	return p
+}
