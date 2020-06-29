@@ -8,41 +8,42 @@ import (
 // 时间复杂度O(n), 空间复杂度O(n)
 func calculate(s string) int {
 	slices := strings.Split(s, "")
-	intputQueue := []string{}
-	var result int
-	var operate int
+	result := 0
+	current := 0
 	sign := 1
+	queue := []string{}
 
-	for _, str := range slices {
-		if str == " " {
+	for _, element := range slices {
+		switch element {
+		case " ":
 			continue
-		} else if str == "+" {
-			result += operate * sign
-			operate = 0
+		case "+":
+			result += current * sign
 			sign = 1
-		} else if str == "-" {
-			result += operate * sign
-			operate = 0
+			current = 0
+		case "-":
+			result += current * sign
 			sign = -1
-		} else if str == "(" {
-			intputQueue = append(intputQueue, strconv.Itoa(result))
-			intputQueue = append(intputQueue, strconv.Itoa(sign))
+			current = 0
+		case "(":
+			queue = append(queue, strconv.Itoa(result))
+			queue = append(queue, strconv.Itoa(sign))
 			result = 0
-			operate = 0
+			current = 0
 			sign = 1
-		} else if str == ")" {
-			result += operate * sign
-			operate = 0
-			tmpSign, _ := strconv.Atoi(intputQueue[len(intputQueue)-1])
-			intputQueue = intputQueue[:len(intputQueue)-1]
-			tmpResult, _ := strconv.Atoi(intputQueue[len(intputQueue)-1])
-			intputQueue = intputQueue[:len(intputQueue)-1]
+		case ")":
+			result += current * sign
+			current = 0
+			tmpSign, _ := strconv.Atoi(queue[len(queue)-1])
+			queue = queue[:len(queue)-1]
+			tmpResult, _ := strconv.Atoi(queue[len(queue)-1])
+			queue = queue[:len(queue)-1]
 			result = tmpResult + tmpSign*result
-		} else {
-			tmpNum, _ := strconv.Atoi(str)
-			operate = 10*operate + tmpNum
+		default:
+			tmpNum, _ := strconv.Atoi(element)
+			current = tmpNum + 10*current
 		}
 	}
 
-	return result + sign*operate
+	return result + current*sign
 }
