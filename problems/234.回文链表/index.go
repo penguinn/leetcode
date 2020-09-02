@@ -13,16 +13,13 @@ func isPalindrome(head *common.ListNode) bool {
 	}
 	i := head
 	j := head
-	length := 0
 	for j != nil && j.Next != nil {
 		i = i.Next
 		j = j.Next
-		length++
 		if j == nil {
 			break
 		} else {
 			j = j.Next
-			length++
 		}
 	}
 
@@ -37,7 +34,7 @@ func isPalindrome(head *common.ListNode) bool {
 		p2 = p3
 	}
 
-	for i := 0; i <= (length-1)/2; i++ {
+	for head != nil && p1 != nil {
 		if head.Val != p1.Val {
 			return false
 		}
