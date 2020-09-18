@@ -6,21 +6,18 @@ func isOneBitCharacter(bits []int) bool {
 		return false
 	}
 
-	bits = bits[:length-1]
-	length = length - 1
-
 	count := 0
-	for i := 0; i <= length-1; i++ {
+	for i := 0; i <= length-2; i++ {
 		if bits[i] == 1 {
 			count++
 		} else {
 			count = 0
 		}
-		if count == 4 {
-			return false
+		if count == 2 {
+			count = 0
 		}
 	}
-	if count == 3 {
+	if count == 1 {
 		return false
 	} else {
 		return true
