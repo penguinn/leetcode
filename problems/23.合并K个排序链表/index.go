@@ -5,6 +5,7 @@ import (
 	"github.com/penguinn/leetcode/common"
 )
 
+// 使用优先堆顶（小顶堆）
 func mergeKLists(lists []*common.ListNode) *common.ListNode {
 	k := len(lists)
 	if k == 0 {
@@ -108,4 +109,45 @@ func minHeapifyFromDown(nums []*common.ListNode, start, end int) []*common.ListN
 	}
 
 	return nums
+}
+
+// 使用分治思想
+func mergeKLists1(lists []*common.ListNode) *common.ListNode {
+	length := len(lists)
+	if length == 0 {
+		return nil
+	}
+	return merge(lists, 0, length-1)
+}
+
+func merge(lists []*common.ListNode, start, end int) *common.ListNode {
+	if start == end {
+		return lists[start]
+	} else {
+		mid := (start + end) / 2
+		return mergeTwoList(merge(lists, start, mid), merge(lists, mid+1, end))
+	}
+}
+
+func mergeTwoList(leftList, rightList *common.ListNode) *common.ListNode {
+	head := &common.ListNode{}
+	p := head
+	for leftList != nil && rightList != nil {
+		if leftList.Val < rightList.Val {
+			p.Next = leftList
+			p = p.Next
+			leftList = leftList.Next
+		} else {
+			p.Next = rightList
+			p = p.Next
+			rightList = rightList.Next
+		}
+	}
+	if leftList != nil {
+		p.Next = leftList
+	} else {
+		p.Next = rightList
+	}
+
+	return head.Next
 }
