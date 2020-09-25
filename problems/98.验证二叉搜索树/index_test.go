@@ -28,7 +28,7 @@ func Test_isValidBST(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := isValidBST(tt.args.root); got != tt.want {
+			if got := isValidBST1(tt.args.root); got != tt.want {
 				t.Errorf("isValidBST() = %v, want %v", got, tt.want)
 			}
 		})

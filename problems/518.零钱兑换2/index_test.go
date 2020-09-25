@@ -22,6 +22,11 @@ func Test_change(t *testing.T) {
 			args: args{amount: 3, coins: []int{2}},
 			want: 0,
 		},
+		{
+			name: "test3",
+			args: args{amount: 0, coins: []int{}},
+			want: 1,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
