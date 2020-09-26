@@ -9,26 +9,31 @@ func coinChange(coins []int, amount int) int {
 	if amount == 0 {
 		return 0
 	}
-	resultArray := make([]int, amount+1, amount+1)
-	for i := 1; i <= amount; i++ {
-		minNum := math.MaxInt64
-		for _, coin := range coins {
+	dp := make([]int, amount+1, amount+1)
+	for _, coin := range coins {
+		for i := coin; i <= amount; i++ {
 			if i == coin {
-				minNum = 0
-			} else if i > coin {
-				tmp := resultArray[i-coin]
-				if tmp != 0 && tmp < minNum {
-					minNum = tmp
-				}
+				dp[i] = 1
+				continue
+			}
+			var min int
+			if dp[i] != 0 {
+				min = dp[i]
+			} else {
+				min = math.MaxInt64
+			}
+			if dp[i-coin] != 0 && dp[i-coin]+1 < min {
+				min = dp[i-coin] + 1
+			}
+			if min != math.MaxInt64 {
+				dp[i] = min
 			}
 		}
-		if minNum != math.MaxInt64 {
-			resultArray[i] = minNum + 1
-		}
 	}
-	if resultArray[amount] != 0 {
-		return resultArray[amount]
-	} else {
+
+	if dp[amount] == 0 {
 		return -1
+	} else {
+		return dp[amount]
 	}
 }

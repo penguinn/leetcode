@@ -4,6 +4,10 @@ import (
 	"math"
 )
 
+// 动态规划
+// 1. 最左边的一列节点等与上面节点+当前节点
+// 2. i==j的节点等与左边节点+当前节点
+// 3. 其他节点等与上面或左边的最小值+当前节点
 func minimumTotal(triangle [][]int) int {
 	length := len(triangle)
 	if length == 0 {

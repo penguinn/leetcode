@@ -1,5 +1,8 @@
 package index
 
+
+// 1. 保存了一个最大值，和最小值。
+// 2. 每次根据当前值，当前值*最大值，当前值*最小值 和最大值比较
 func maxProduct(nums []int) int {
 	length := len(nums)
 	if length == 0 {
