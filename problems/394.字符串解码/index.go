@@ -5,31 +5,42 @@ import (
 	"strings"
 )
 
+type stackStr struct {
+	Str   string // "["前的字符串
+	Times int    // "["前的次数
+}
+
 func decodeString(s string) string {
-	stack := []int{}
-	times := 1
 	result := ""
-	tmpTimes := 0
+	stack := []stackStr{}
+	times := 0
+	str := ""
 	for _, c := range strings.Split(s, "") {
 		if c == "[" {
-			stack = append(stack, tmpTimes)
-			times *= tmpTimes
-			tmpTimes = 0
+			stack = append(stack, stackStr{Str: str, Times: times})
+			times = 0
+			str = ""
 		} else if c == "]" {
-			tmp := stack[len(stack)-1]
+			tmpElement := stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
-			tmpTimes /= tmp
+			str = strings.Repeat(str, tmpElement.Times)
+			str = tmpElement.Str + str
+			if len(stack) == 0 {
+				result += str
+				str = ""
+			}
 		} else {
 			inst, err := strconv.Atoi(c)
 			if err == nil {
-				tmpTimes = 10*tmpTimes + inst
+				times = 10*times + inst
 			} else {
-				for i := 0; i < times; i++ {
-					result += c
-				}
+				str += c
 			}
 		}
 	}
+
+	// 最后的字符串
+	result += str
 
 	return result
 }
