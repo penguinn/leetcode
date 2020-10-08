@@ -3,20 +3,14 @@ package index
 // 利用贪心
 func canJump(nums []int) bool {
 	length := len(nums)
-	if length <= 1 {
-		return true
-	}
-	maxIndex := 0
-	for i, num := range nums {
-		if i > maxIndex {
-			break
-		} else if i+num > maxIndex {
-			maxIndex = i + num
+	var max int
+	for i:=0;i<=max;i++ {
+		if i+nums[i] > max {
+			max = i+nums[i]
+		}
+		if max >= length-1 {
+			return true
 		}
 	}
-	if maxIndex >= length-1 {
-		return true
-	} else {
-		return false
-	}
+	return false
 }
