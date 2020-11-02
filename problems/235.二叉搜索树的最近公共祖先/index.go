@@ -70,14 +70,15 @@ func findAncestor(root *common.TreeNode, p, q int) (int, *common.TreeNode) {
 	return 0, nil
 }
 
+// 记住题目是二叉搜索树，所以用一个聪明的解法
 func lowestCommonAncestor(root, p, q *common.TreeNode) *common.TreeNode {
 	if root == nil || p == nil || q == nil {
 		return nil
 	}
 	if (root.Val <= p.Val && root.Val >= q.Val) || (root.Val >= p.Val && root.Val <= q.Val) {
 		return root
-	} else if leftNode := lowestCommonAncestor(root.Left, p, q); leftNode != nil {
-		return leftNode
+	} else if root.Val > p.Val && root.Val > q.Val {
+		return lowestCommonAncestor(root.Left, p, q)
 	} else {
 		return lowestCommonAncestor(root.Right, p, q)
 	}
