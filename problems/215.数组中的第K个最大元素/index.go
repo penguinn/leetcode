@@ -35,35 +35,70 @@ package index
 
 // 利用堆的思维
 // 大顶堆
-func findKthLargest(nums []int, k int) int {
+func findKthLargest1(nums []int, k int) int {
 	length := len(nums)
 	if length == 1 {
 		return nums[0]
 	}
 	for i := length/2 - 1; i >= 0; i-- {
-		heap(&nums, i, length-1)
+		heap(nums, i, length-1)
 	}
 	for i := length - 1; i >= length-k; i-- {
 		nums[0], nums[i] = nums[i], nums[0]
-		heap(&nums, 0, i-1)
+		heap(nums, 0, i-1)
 	}
 	return nums[length-k]
 }
 
-func heap(nums *[]int, start, end int) {
+func heap(nums []int, start, end int) {
 	left := 2*start + 1
 	right := 2*start + 2
 	if left > end {
 		return
 	}
 	tmp := left
-	if right <= end && (*nums)[right] > (*nums)[left] {
+	if right <= end && nums[right] > nums[left] {
 		tmp = right
 	}
-	if (*nums)[tmp] > (*nums)[start] {
-		(*nums)[tmp], (*nums)[start] = (*nums)[start], (*nums)[tmp]
+	if nums[tmp] > nums[start] {
+		nums[tmp], nums[start] = nums[start], nums[tmp]
 		heap(nums, tmp, end)
 	} else {
 		return
+	}
+}
+
+// 小顶堆，最大长度k
+func findKthLargest(nums []int, k int) int {
+	length := len(nums)
+	if k > length {
+		return -1
+	}
+	for i:=k/2-1;i>=0;i-- {
+		lessHeap(nums, i, k-1)
+	}
+
+	for i:=k;i<=length-1;i++ {
+		if nums[i] > nums[0] {
+			nums[0], nums[i] = nums[i], nums[0]
+			lessHeap(nums, 0, k-1)
+		}
+	}
+	return nums[0]
+}
+
+func lessHeap(nums []int, start, end int) {
+	left := 2*start + 1
+	right := 2*start + 2
+	if left > end {
+		return
+	}
+	tmp := left
+	if right <= end && nums[right] < nums[left] {
+		tmp = right
+	}
+	if nums[tmp] < nums[start] {
+		nums[tmp], nums[start] = nums[start], nums[tmp]
+		lessHeap(nums, tmp, end)
 	}
 }
