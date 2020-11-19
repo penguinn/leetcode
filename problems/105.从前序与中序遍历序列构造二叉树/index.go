@@ -32,7 +32,5 @@ func buildTree(preorder []int, inorder []int) *common.TreeNode {
 		}
 	}
 
-	leftLength := i - 0
-
-	return &common.TreeNode{Val: val, Left: buildTree(preorder[1:1+leftLength], inorder[0:i]), Right: buildTree(preorder[1+leftLength:], inorder[i+1:])}
+	return &common.TreeNode{Val: val, Left: buildTree(preorder[1:1+i], inorder[0:i]), Right: buildTree(preorder[1+i:], inorder[i+1:])}
 }
