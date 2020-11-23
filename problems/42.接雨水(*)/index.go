@@ -108,3 +108,35 @@ func trap2(height []int) int {
 
 	return result
 }
+
+
+func trap5(height []int) int {
+	length := len(height)
+	if length <= 0 {
+		return 0
+	}
+	left := 0
+	right := length-1
+	maxLeft := 0
+	maxRight := length-1
+	result := 0
+	for left < right {
+		if height[left] <= height[right] {
+			if height[maxLeft] <= height[left] {
+				maxLeft = left
+			} else {
+				result += (height[maxLeft] - height[left])
+			}
+			left++
+		} else {
+			if height[maxRight] <= height[right] {
+				maxRight = right
+			} else {
+				result += (height[maxRight] - height[right])
+			}
+			right--
+		}
+	}
+
+	return result
+}

@@ -1,11 +1,17 @@
 package index
 
+import (
+	"sort"
+)
+
 func merge(intervals [][]int) [][]int {
 	length := len(intervals)
 	if length <= 1 {
 		return intervals
 	}
-	quickSort(intervals, 0, length-1)
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
 	result := [][]int{}
 	var start, end int
 	for i := 0; i <= length-1; i++ {
@@ -44,4 +50,32 @@ func partition(intervals [][]int, start, end int) int {
 	intervals[j], intervals[end] = intervals[end], intervals[j]
 
 	return j
+}
+
+func merge1(intervals [][]int) [][]int {
+	length := len(intervals)
+	if length == 0 {
+		return intervals
+	}
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
+	result := [][]int{}
+	node := intervals[0]
+	tmp := []int{}
+	for i := 0; i <= length-1; i++ {
+		tmp = intervals[i]
+		if tmp[0] >= node[0] && tmp[0] <= node[1] && tmp[1] > node[1] {
+			node[1] = tmp[1]
+		}else if  tmp[0] >= node[0] && tmp[0] <= node[1] && tmp[1] <= node[1] {
+			continue
+		} else {
+			result = append(result, node)
+			node = tmp
+		}
+	}
+
+	result = append(result, node)
+
+	return result
 }

@@ -21,10 +21,15 @@ func Test_trap(t *testing.T) {
 			args: args{height: []int{2, 0, 2}},
 			want: 2,
 		},
+		{
+			name: "test3",
+			args: args{height: []int{4, 2, 3}},
+			want: 1,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := trap2(tt.args.height); got != tt.want {
+			if got := trap1(tt.args.height); got != tt.want {
 				t.Errorf("trap() = %v, want %v", got, tt.want)
 			}
 		})
