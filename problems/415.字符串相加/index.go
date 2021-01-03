@@ -45,3 +45,49 @@ func addStrings(num1 string, num2 string) string {
 
 	return result
 }
+
+func addStrings1(num1 string, num2 string) string {
+	if num1 == "0" {
+		return num2
+	}
+	if num2 == "0" {
+		return num1
+	}
+	length1 := len(num1)
+	length2 := len(num2)
+
+	result := ""
+	i, j := length1-1, length2-1
+	carray := 0
+	for i >= 0 && j >= 0 {
+		add1 := num1[i] - '0'
+		add2 := num2[j] - '0'
+		sum := int(add1) + int(add2) + carray
+		carray = sum / 10
+		result = strconv.Itoa(sum % 10) + result
+		i--
+		j--
+	}
+
+	for i >= 0 {
+		add := num1[i] - '0'
+		sum := int(add) + carray
+		carray = sum / 10
+		result = strconv.Itoa(sum % 10) + result
+		i--
+	}
+
+	for j >= 0 {
+		add := num2[j] - '0'
+		sum := int(add) + carray
+		carray = sum / 10
+		result = strconv.Itoa(sum % 10) + result
+		j--
+	}
+
+	if carray == 1 {
+		result = "1" + result
+	}
+
+	return result
+}
