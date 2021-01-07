@@ -5,28 +5,30 @@ func nthUglyNumber(n int) int {
 		return 1
 	}
 
-	nums := make([]int, 0, n)
-	nums = append(nums, 1)
-	i2, i3, i5 := 1, 1, 1
-	for len(nums) < n {
-		tmp := min(2*i2, 3*i3, 5*i5)
-		if tmp == 2*i2 {
+	dp := make([]int, 0, n)
+	dp = append(dp, 1)
+	i2, i3, i5 := 0, 0, 0
+	for len(dp) < n {
+		tmp := min(2*dp[i2], 3*dp[i3], 5*dp[i5])
+		if tmp == 2*dp[i2] {
 			i2++
-		} else if tmp == 3*i3 {
+		}
+		if tmp == 3*dp[i3] {
 			i3++
-		} else {
+		}
+		if tmp == 5*dp[i5] {
 			i5++
 		}
-		nums = append(nums, tmp)
+		dp = append(dp, tmp)
 	}
-	return nums[n-1]
+	return dp[n-1]
 }
 
 func min(x, y, z int) int {
-	if x < y && x < z {
+	if x <= y && x <= z {
 		return x
 	}
-	if y < x && y < z {
+	if y <= x && y <= z {
 		return y
 	}
 	return z
